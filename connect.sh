@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_FILE=/tmp/openvpn.log
+pkill -P $$ openvpn
 
 set -e
 
@@ -23,7 +23,7 @@ done
 echo '==> OpenVPN is connected!'
 
 if [ -n "$NAMESERVER" ] && [ -n "$DOMAIN" ]; then
-  echo -e "nameserver ${NAMESERVER}\ndomain ${DOMAIN}" > /etc/resolv.conf
+  echo -e "nameserver ${NAMESERVER}\ndomain ${DOMAIN}" >> /etc/resolv.conf
 else
   echo "==> No nameserver/domain defined"
 fi
