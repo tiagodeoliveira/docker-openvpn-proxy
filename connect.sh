@@ -22,8 +22,10 @@ done
 
 echo '==> OpenVPN is connected!'
 
-if [ -n "$NAMESERVER" ] && [ -n "$DOMAIN" ]; then
-  echo -e "nameserver ${NAMESERVER}\ndomain ${DOMAIN}" >> /etc/resolv.conf
+RESOLV=`cat "${LOG_FILE}" | grep "dhcp-option DNS" | tail -1 | awk -F ',' '{for (i=1;i<=NF;i++) print $i}' | grep "dhcp-option" | awk -F 'dhcp-option' '{print $2}' | sed -e 's/DNS/nameserver/g' | sed -e 's/DOMAIN/domain/g' | sed 's/^ *//;s/ *$//'`
+
+if [ -n "$RESOLV" ]; then
+  echo -e "${RESOLV}" >> /etc/resolv.conf
 else
   echo "==> No nameserver/domain defined"
 fi

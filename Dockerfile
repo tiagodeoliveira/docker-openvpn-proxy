@@ -3,7 +3,8 @@ FROM ubuntu:xenial
 RUN apt-get update && \ 
   apt-get install -y \
   openvpn \
-  iptables
+  iptables \
+  curl
 
 COPY connect.sh /connect.sh
 
